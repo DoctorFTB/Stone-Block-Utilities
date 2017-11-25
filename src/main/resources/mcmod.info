@@ -1,0 +1,16 @@
+[
+{
+  "modid": "stoneblockutilities",
+  "name": "StoneBlockUtilities",
+  "description": "Simple utilities for StoneBlock pack.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/DoctorFTB/Stone-Block-Utilities",
+  "updateUrl": "",
+  "authorList": ["FTB_lag"],
+  "credits": "",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

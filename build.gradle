@@ -1,0 +1,59 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "1.0.0"
+group = "ftblag.stoneblockutilities"
+archivesBaseName = "StoneBlockUtilities"
+
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+    version = "1.12.2-14.23.1.2554"
+    runDir = "run"
+    
+    mappings = "snapshot_20171125"
+}
+
+repositories {
+    maven {
+        url "https://minecraft.curseforge.com/api/maven/"
+    }
+	maven {
+		url = "http://dvs1.progwml6.com/files/maven"
+	}
+	maven {
+		url = "modmaven.k-4u.nl"
+  }	
+}
+
+dependencies {
+    deobfCompile "ex-nihilo-creatio:exnihilocreatio:1.12:0.1.5"
+	deobfProvided "mezz.jei:jei_1.12.2:4.8.3.124:api"
+	runtime "mezz.jei:jei_1.12.2:4.8.3.124"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
