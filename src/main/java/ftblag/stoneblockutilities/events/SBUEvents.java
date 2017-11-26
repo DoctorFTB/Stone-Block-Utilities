@@ -20,9 +20,9 @@ public class SBUEvents {
 	@SubscribeEvent
 	public static void block(BreakEvent e) {
 		if (e.getState().getBlock() == Blocks.STONE && !e.getWorld().isRemote
-				&& e.getPlayer().getHeldItemMainhand() == ItemStack.EMPTY && rnd.nextInt(2) == 0) {
+				&& e.getPlayer().getHeldItemMainhand() == ItemStack.EMPTY) {
 			e.getWorld().spawnEntity(new EntityItem(e.getWorld(), e.getPos().getX(), e.getPos().getY(),
-					e.getPos().getZ(), new ItemStack(ModItems.pebbles, 1, 0)));
+					e.getPos().getZ(), new ItemStack(ModItems.pebbles, rnd.nextInt(100) < 5 ? 2 : 1, 0)));
 		} else if (e.getState().getBlock() == Blocks.DIRT && !e.getWorld().isRemote
 				&& e.getPlayer().getHeldItemMainhand().getItem() == SBURegistry.crook) {
 			e.getWorld().setBlockState(e.getPos(), Blocks.AIR.getDefaultState());
