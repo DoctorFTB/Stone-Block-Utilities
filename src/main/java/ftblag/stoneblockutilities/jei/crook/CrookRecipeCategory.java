@@ -17,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 public class CrookRecipeCategory implements IRecipeCategory<CrookRecipe> {
 	public static final String UID = StoneBlockUtilities.MODID + ":crook";
 	private static final ResourceLocation texture = new ResourceLocation("exnihilocreatio",
-			"textures/gui/jei_hammer.png");
+	        "textures/gui/jei_hammer.png");
 
 	private final IDrawableStatic background;
 	private final IDrawableStatic slotHighlight;
@@ -85,8 +85,8 @@ public class CrookRecipeCategory implements IRecipeCategory<CrookRecipe> {
 				ItemStack focusStack = (ItemStack) focus.getValue();
 
 				if (focus.getMode() == IFocus.Mode.OUTPUT && !focusStack.isEmpty()
-						&& focusStack.getItem() == outputStack.getItem()
-						&& focusStack.getItemDamage() == outputStack.getItemDamage()) {
+				        && focusStack.getItem() == outputStack.getItem()
+				        && focusStack.getItemDamage() == outputStack.getItemDamage()) {
 					highlightX = slotX;
 					highlightY = slotY;
 				}

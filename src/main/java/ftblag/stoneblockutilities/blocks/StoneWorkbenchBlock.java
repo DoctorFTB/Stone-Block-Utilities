@@ -27,7 +27,7 @@ public class StoneWorkbenchBlock extends Block {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ) {
+	        EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote)
 			player.openGui(StoneBlockUtilities.INSTANCE, 0, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
