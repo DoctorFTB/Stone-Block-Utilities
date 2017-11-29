@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.0.2"
+version = "1.0.3"
 group = "ftblag.stoneblockutilities"
 archivesBaseName = "StoneBlockUtilities"
 
@@ -34,7 +34,7 @@ repositories {
 	}
 	maven {
 		url = "modmaven.k-4u.nl"
-  }	
+	}	
 }
 
 dependencies {

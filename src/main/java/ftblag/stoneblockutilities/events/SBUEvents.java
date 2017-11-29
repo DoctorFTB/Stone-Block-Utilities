@@ -9,6 +9,7 @@ import ftblag.stoneblockutilities.registry.SBURegistry;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,7 +21,8 @@ public class SBUEvents {
 
 	@SubscribeEvent
 	public static void block(BreakEvent e) {
-		if (e.getState().getBlock() == Blocks.STONE && !e.getWorld().isRemote
+		if (!(e.getPlayer() instanceof FakePlayer) && !e.getPlayer().capabilities.isCreativeMode
+		        && e.getState().getBlock() == Blocks.STONE && !e.getWorld().isRemote
 		        && e.getPlayer().getHeldItemMainhand() == ItemStack.EMPTY) {
 			e.getWorld()
 			        .spawnEntity(new EntityItem(e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(),
