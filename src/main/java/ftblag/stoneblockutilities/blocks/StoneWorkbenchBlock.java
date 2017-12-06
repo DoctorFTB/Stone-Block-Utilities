@@ -15,21 +15,21 @@ import net.minecraft.world.World;
 
 public class StoneWorkbenchBlock extends Block {
 
-	public StoneWorkbenchBlock() {
-		super(Material.WOOD);
-		setCreativeTab(CreativeTabs.DECORATIONS);
-		setRegistryName(StoneBlockUtilities.MODID, "stoneworkbench");
-		setUnlocalizedName(StoneBlockUtilities.MODID + ".stoneworkbench");
-		setCreativeTab(CT.tab);
-		setHardness(2.5F);
-		setSoundType(SoundType.STONE);
-	}
+    public StoneWorkbenchBlock() {
+        super(Material.WOOD);
+        setCreativeTab(CreativeTabs.DECORATIONS);
+        setRegistryName(StoneBlockUtilities.MODID, "stoneworkbench");
+        setUnlocalizedName(StoneBlockUtilities.MODID + ".stoneworkbench");
+        setCreativeTab(CT.tab);
+        setHardness(2.5F);
+        setSoundType(SoundType.STONE);
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-	        EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote)
-			player.openGui(StoneBlockUtilities.INSTANCE, 0, world, pos.getX(), pos.getY(), pos.getZ());
-		return true;
-	}
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+            EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!world.isRemote)
+            player.openGui(StoneBlockUtilities.INSTANCE, 0, world, pos.getX(), pos.getY(), pos.getZ());
+        return true;
+    }
 }

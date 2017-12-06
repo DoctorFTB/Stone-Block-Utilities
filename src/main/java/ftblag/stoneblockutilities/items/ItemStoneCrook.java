@@ -11,17 +11,17 @@ import net.minecraft.item.ItemTool;
 
 public class ItemStoneCrook extends ItemTool implements ICrook {
 
-	public ItemStoneCrook() {
-		super(ToolMaterial.STONE, Sets.newHashSet(new Block[] {}));
+    public ItemStoneCrook() {
+        super(ToolMaterial.STONE, Sets.newHashSet(new Block[] {}));
 
-		setRegistryName(StoneBlockUtilities.MODID, "crook_stone");
-		setUnlocalizedName(StoneBlockUtilities.MODID + ".crook_stone");
-		setMaxDamage(256);
-		setCreativeTab(CT.tab);
-	}
+        setRegistryName(StoneBlockUtilities.MODID, "crook_stone");
+        setUnlocalizedName(StoneBlockUtilities.MODID + ".crook_stone");
+        setMaxDamage(256);
+        setCreativeTab(CT.tab);
+    }
 
-	@Override
-	public boolean isCrook(ItemStack stack) {
-		return true;
-	}
+    @Override
+    public boolean isCrook(ItemStack stack) {
+        return true;
+    }
 }

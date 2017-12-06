@@ -1,4 +1,4 @@
-package ftblag.stoneblockutilities.jei.crook;
+package ftblag.stoneblockutilities.jei.hand;
 
 import java.util.List;
 
@@ -6,22 +6,21 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.Lists;
 
+import exnihilocreatio.ModItems;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-public class CrookRecipe implements IRecipeWrapper {
+public class HandRecipe implements IRecipeWrapper {
 
     private List<ItemStack> inputs;
     private List<ItemStack> outputs;
 
-    public CrookRecipe() {
-        inputs = Lists.newArrayList(new ItemStack(Blocks.DIRT));
-        outputs = Lists.newArrayList();
-        for (int i = 0; i < 6; i++)
-            outputs.add(new ItemStack(Blocks.SAPLING, 1, i));
+    public HandRecipe() {
+        inputs = Lists.newArrayList(new ItemStack(Blocks.STONE));
+        outputs = Lists.newArrayList(new ItemStack(ModItems.pebbles, 1, 0));
     }
 
     @Override

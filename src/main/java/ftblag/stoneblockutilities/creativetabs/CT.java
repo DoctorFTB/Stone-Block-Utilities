@@ -9,27 +9,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CT extends CreativeTabs {
 
-	public static final CreativeTabs tab = new CT();
+    public static final CreativeTabs tab = new CT();
 
-	public CT() {
-		super(StoneBlockUtilities.MODID);
-	}
+    public CT() {
+        super(StoneBlockUtilities.MODID);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public String getTabLabel() {
-		return StoneBlockUtilities.MODID;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getTabLabel() {
+        return StoneBlockUtilities.MODID;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public String getTranslatedTabLabel() {
-		return StoneBlockUtilities.MODID;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getTranslatedTabLabel() {
+        return StoneBlockUtilities.MODID;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ItemStack getTabIconItem() {
-		return new ItemStack(Items.DIAMOND);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemStack getTabIconItem() {
+        return new ItemStack(Items.DIAMOND);
+    }
 }
