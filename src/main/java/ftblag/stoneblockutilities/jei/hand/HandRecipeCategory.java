@@ -12,9 +12,7 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ITooltipCallback;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IRecipeCategory;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -25,15 +23,9 @@ public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
             "textures/gui/jei_hammer.png");
 
     private final IDrawableStatic background;
-    private final IDrawableStatic slotHighlight;
-
-    private boolean hasHighlight;
-    private int highlightX;
-    private int highlightY;
 
     public HandRecipeCategory(IGuiHelper helper) {
         background = helper.createDrawable(texture, 0, 0, 166, 128);
-        slotHighlight = helper.createDrawable(texture, 166, 0, 18, 18);
     }
 
     @Override
@@ -60,42 +52,20 @@ public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
     }
 
     @Override
-    public void drawExtras(@Nonnull Minecraft minecraft) {
-        if (hasHighlight) {
-            slotHighlight.draw(minecraft, highlightX, highlightY);
-        }
-    }
-
-    @Override
     public void setRecipe(IRecipeLayout recipeLayout, HandRecipe recipeWrapper, IIngredients ingredients) {
         recipeLayout.getItemStacks().init(0, true, 74, 9);
         recipeLayout.getItemStacks().set(0, recipeWrapper.getInputs().get(0));
 
-        IFocus<?> focus = recipeLayout.getFocus();
+        int slotIndex = 1;
 
-        if (focus != null) {
-            hasHighlight = focus.getMode() == IFocus.Mode.OUTPUT;
+        for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
+            final int slotX = 2 + i % 9 * 18;
+            final int slotY = 36 + i / 9 * 18;
 
-            int slotIndex = 1;
+            ItemStack outputStack = recipeWrapper.getOutputs().get(i);
 
-            for (int i = 0; i < recipeWrapper.getOutputs().size(); i++) {
-                final int slotX = 2 + i % 9 * 18;
-                final int slotY = 36 + i / 9 * 18;
-
-                ItemStack outputStack = recipeWrapper.getOutputs().get(i);
-
-                recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
-                recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
-
-                ItemStack focusStack = (ItemStack) focus.getValue();
-
-                if (focus.getMode() == IFocus.Mode.OUTPUT && !focusStack.isEmpty()
-                        && focusStack.getItem() == outputStack.getItem()
-                        && focusStack.getItemDamage() == outputStack.getItemDamage()) {
-                    highlightX = slotX;
-                    highlightY = slotY;
-                }
-            }
+            recipeLayout.getItemStacks().init(slotIndex + i, false, slotX, slotY);
+            recipeLayout.getItemStacks().set(slotIndex + i, outputStack);
         }
 
         recipeLayout.getItemStacks().addTooltipCallback(new ITooltipCallback<ItemStack>() {
@@ -109,10 +79,5 @@ public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
                 }
             }
         });
-    }
-
-    @Override
-    public IDrawable getIcon() {
-        return null;
     }
 }
