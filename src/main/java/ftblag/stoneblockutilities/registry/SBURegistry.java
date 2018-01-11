@@ -41,22 +41,11 @@ public class SBURegistry {
 
     @SubscribeEvent
     public void recipe(Register<IRecipe> e) {
-        // TODO better registr
-        //		ShapedPrimer primer = CraftingHelper.parseShaped("## ", "# ", "# ", '#', Blocks.COBBLESTONE);
-        //		e.getRegistry().register(new ShapedRecipes(new ResourceLocation(MODID + ":table").toString(), primer.width,
-        //				primer.height, primer.input, new ItemStack(SBURegistry.crook)));
-
         GameRegistry.addShapedRecipe(new ResourceLocation(MODID + ":crook"), new ResourceLocation(MODID + "crook"),
                 new ItemStack(SBURegistry.crook), "## ", "#  ", "#  ", '#', Blocks.COBBLESTONE);
 
         GameRegistry.addShapedRecipe(new ResourceLocation(MODID + ":table"), new ResourceLocation(MODID + "table"),
                 new ItemStack(SBURegistry.table), "##", "##", '#', Blocks.COBBLESTONE);
-
-        //		NonNullList<Ingredient> l = NonNullList.create();
-        //		for (int i = 0; i < 4; i++)
-        //			l.add(Ingredient.fromStacks(new ItemStack(Blocks.COBBLESTONE)));
-        //		e.getRegistry().register(new ShapelessRecipes(new ResourceLocation(MODID + ":table").toString(),
-        //				new ItemStack(SBURegistry.table), l).setRegistryName(new ResourceLocation(MODID + ":table")));
     }
 
     @SideOnly(Side.CLIENT)
