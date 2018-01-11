@@ -72,20 +72,20 @@ public class ContainerWB extends Container {
             itemstack = itemstack1.copy();
 
             if (index == 0) {
-                itemstack1.getItem().onCreated(itemstack1, playerIn.world, playerIn);
+                itemstack1.getItem().onCreated(itemstack1, te.getWorld(), playerIn);
 
                 if (!mergeItemStack(itemstack1, 10, 46, true))
                     return ItemStack.EMPTY;
 
                 slot.onSlotChange(itemstack1, itemstack);
-            } else if (index >= 10 && index < 37)
+            } else if (index >= 10 && index < 37) {
                 if (!mergeItemStack(itemstack1, 37, 46, false))
                     return ItemStack.EMPTY;
-                else if (index >= 37 && index < 46)
-                    if (!mergeItemStack(itemstack1, 10, 37, false))
-                        return ItemStack.EMPTY;
-                    else if (!mergeItemStack(itemstack1, 10, 46, false))
-                        return ItemStack.EMPTY;
+            } else if (index >= 37 && index < 46) {
+                if (!mergeItemStack(itemstack1, 10, 37, false))
+                    return ItemStack.EMPTY;
+            } else if (!mergeItemStack(itemstack1, 10, 46, false))
+                return ItemStack.EMPTY;
 
             if (itemstack1.isEmpty())
                 slot.putStack(ItemStack.EMPTY);
