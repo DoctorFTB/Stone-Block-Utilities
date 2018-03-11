@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
-    public static final String UID = StoneBlockUtilities.MODID + ":hand";
+    public static final String            UID     = StoneBlockUtilities.MODID + ":hand";
     private static final ResourceLocation texture = new ResourceLocation("exnihilocreatio",
             "textures/gui/jei_hammer.png");
 

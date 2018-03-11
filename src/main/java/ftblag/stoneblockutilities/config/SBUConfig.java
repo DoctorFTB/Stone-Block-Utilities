@@ -7,9 +7,9 @@ import net.minecraftforge.common.config.Configuration;
 
 public class SBUConfig {
 
-    public static int chance = 5, drop_with = 4, drop_without = 2;
-    public static boolean fast_break = true, active_render = true;
-    public static double speed_break_stone = 1.0D;
+    public static int     chance            = 5, drop_with = 4, drop_without = 2;
+    public static boolean fast_break        = true, active_render = true;
+    public static double  speed_break_stone = 1.0D;
 
     public static void setupConfig(Configuration cfg, Logger logger) {
         try {

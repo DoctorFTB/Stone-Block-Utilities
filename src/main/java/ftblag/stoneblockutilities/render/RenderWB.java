@@ -28,7 +28,7 @@ public class RenderWB extends TileEntitySpecialRenderer<StoneWorkbenchTileEntity
                         z = z1 + Math.rint(100.0 * (0.67 - i / 3 * 0.19)) / 100.0;
                 GlStateManager.translate(x, y, z);
                 GlStateManager.scale(0.65, 0.65, 0.65);
-                double time = mc.getSystemTime() / 800D;
+                double time = Minecraft.getSystemTime() / 800D;
                 GlStateManager.translate(0D, Math.sin(time % (2 * Math.PI)) * 0.065, 0D);
                 GlStateManager.rotate((float) (time * 40D % 360), 0, 1, 0);
                 mc.getRenderItem().renderItem(is, ItemCameraTransforms.TransformType.GROUND);

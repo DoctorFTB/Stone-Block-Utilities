@@ -25,22 +25,22 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Mod.EventBusSubscriber(modid = MODID)
 public class SBURegistry {
 
-    public static ItemStoneCrook crook = new ItemStoneCrook();
+    public static ItemStoneCrook      crook = new ItemStoneCrook();
     public static StoneWorkbenchBlock table = new StoneWorkbenchBlock();
-    public static ItemHand hand = new ItemHand();
+    public static ItemHand            hand  = new ItemHand();
 
     @SubscribeEvent
-    public void item(Register<Item> e) {
+    public static void item(Register<Item> e) {
         e.getRegistry().registerAll(crook, hand, new ItemBlock(table).setRegistryName(table.getRegistryName()));
     }
 
     @SubscribeEvent
-    public void block(Register<Block> e) {
+    public static void block(Register<Block> e) {
         e.getRegistry().registerAll(table);
     }
 
     @SubscribeEvent
-    public void recipe(Register<IRecipe> e) {
+    public static void recipe(Register<IRecipe> e) {
         GameRegistry.addShapedRecipe(new ResourceLocation(MODID + ":crook"), new ResourceLocation(MODID + "crook"),
                 new ItemStack(SBURegistry.crook), "## ", "#  ", "#  ", '#', Blocks.COBBLESTONE);
 
@@ -50,7 +50,7 @@ public class SBURegistry {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void models(ModelRegistryEvent e) {
+    public static void models(ModelRegistryEvent e) {
         ModelLoader.setCustomModelResourceLocation(crook, 0,
                 new ModelResourceLocation(crook.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(hand, 0,

@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import ftblag.stoneblockutilities.tileentity.StoneWorkbenchTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
@@ -20,6 +21,12 @@ public class GuiWB extends GuiContainer {
         super(new ContainerWB(player, teIn));
         xSize = 176;
         ySize = 166;
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        fontRenderer.drawString(I18n.format("container.crafting"), 28, 6, 4210752);
+        fontRenderer.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
     }
 
     @Override
