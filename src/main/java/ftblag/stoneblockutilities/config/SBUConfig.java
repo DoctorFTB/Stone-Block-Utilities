@@ -10,6 +10,7 @@ public class SBUConfig {
     public static int     chance            = 5, drop_with = 4, drop_without = 2;
     public static boolean fast_break        = true, active_render = true;
     public static double  speed_break_stone = 1.0D;
+	public static int     clear_list_chance = 25, add_to_list_chance = 15;
 
     public static void setupConfig(Configuration cfg, Logger logger) {
         try {
@@ -25,6 +26,10 @@ public class SBUConfig {
                     "If fast break true - change speed. # min 0.1, max 100.0", 0.1, 100.0).getDouble();
             active_render = getBoolean("render", cfg, "active_render", active_render,
                     "*NEED RESTART GAME!* If true render items on stone workbench is on.");
+            clear_list_chance = getIntRange("chance", cfg, "clear_list_chance", chance,
+                "Chance to clear list with mob spawn positions. # min 0, max 101", 0, 101);
+            add_to_list_chance = getIntRange("chance", cfg, "add_to_list_chance", add_to_list_chance,
+                "Chance to add mob spawn position to list. # min 0, max 101", 0, 101);
         } catch (Exception e) {
             logger.log(Level.ERROR, "An error occured loading SBU config!");
             e.printStackTrace();

@@ -3,6 +3,7 @@ package ftblag.stoneblockutilities.asm;
 import java.util.ArrayList;
 import java.util.Map;
 
+import ftblag.stoneblockutilities.config.SBUConfig;
 import org.apache.logging.log4j.LogManager;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -71,7 +72,10 @@ public final class SBUTransformer implements IClassTransformer, IFMLLoadingPlugi
         for (int m = worldIn.getHeight() - 1; m > 0; m--)
             if (worldIn.getBlockState(new BlockPos(i, m, j)).getBlock() == Blocks.AIR
                     && worldIn.getBlockState(new BlockPos(i, m - 1, j)).getBlock() != Blocks.AIR)
-                list.add(m);
+                if (worldIn.rand.nextInt(99) + 1 <= SBUConfig.add_to_list_chance)
+					list.add(m);
+		if (worldIn.rand.nextInt(99) + 1 <= SBUConfig.clear_list_chance)
+            list.clear();
         return list.isEmpty() ? new BlockPos(i, 0, j) : new BlockPos(i, list.get(worldIn.rand.nextInt(list.size())), j);
     }
 
