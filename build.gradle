@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "2.0.7"
+version = "2.0.9"
 group = "ftblag.stoneblockutilities"
 archivesBaseName = "StoneBlockUtilities"
 
@@ -19,28 +19,29 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.2.2611"
+    version = "1.12.2-14.23.4.2707"
+    replaceIn "StoneBlockUtilities.java"
+    replace "@VERSION@", project.version
     runDir = "run"
-    
-    mappings = "snapshot_20171003"
+    mappings = "snapshot_20171125"
 }
 
 repositories {
     maven {
         url "https://minecraft.curseforge.com/api/maven/"
     }
-	maven {
-		url = "http://dvs1.progwml6.com/files/maven"
-	}
-	maven {
-		url = "modmaven.k-4u.nl"
-	}	
+    maven {
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        url = "modmaven.k-4u.nl"
+    }
 }
 
 dependencies {
     deobfCompile "ex-nihilo-creatio:exnihilocreatio:1.12:0.1.5"
-	deobfProvided "mezz.jei:jei_1.12.2:4.8.3.124:api"
-	runtime "mezz.jei:jei_1.12.2:4.8.3.124"
+    deobfProvided "mezz.jei:jei_1.12.2:4.8.3.124:api"
+    runtime "mezz.jei:jei_1.12.2:4.8.3.124"
 }
 
 processResources {
@@ -56,8 +57,8 @@ processResources {
 }
 
 jar {
-   manifest {
-		attributes 'FMLCorePlugin': 'ftblag.stoneblockutilities.asm.SBUTransformer'
-		attributes 'FMLCorePluginContainsFMLMod': 'true'
-   }
+    manifest {
+        attributes 'FMLCorePlugin': 'ftblag.stoneblockutilities.asm.SBUTransformer'
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
 }
