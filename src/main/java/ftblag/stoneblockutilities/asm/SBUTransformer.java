@@ -31,7 +31,7 @@ public final class SBUTransformer implements IClassTransformer, IFMLLoadingPlugi
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        return transformedName.equals("net.minecraft.world.WorldEntitySpawner") ? patch(basicClass) : basicClass;
+        return !SBUConfig.disable_asm && transformedName.equals("net.minecraft.world.WorldEntitySpawner") ? patch(basicClass) : basicClass;
     }
 
     public static byte[] patch(byte[] basicClass) {
