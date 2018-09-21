@@ -1,12 +1,11 @@
 package ftblag.stoneblockutilities.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import ftblag.stoneblockutilities.tileentity.StoneWorkbenchTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class GuiWB extends GuiContainer {
 

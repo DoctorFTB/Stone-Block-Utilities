@@ -31,7 +31,7 @@ public final class SBUTransformer implements IClassTransformer, IFMLLoadingPlugi
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        return !SBUConfig.disable_asm && transformedName.equals("net.minecraft.world.WorldEntitySpawner") ? patch(basicClass) : basicClass;
+        return transformedName.equals("net.minecraft.world.WorldEntitySpawner") ? !SBUConfig.disable_asm ? patch(basicClass) : basicClass : basicClass;
     }
 
     public static byte[] patch(byte[] basicClass) {
@@ -39,13 +39,14 @@ public final class SBUTransformer implements IClassTransformer, IFMLLoadingPlugi
         new ClassReader(basicClass).accept(cNode, 0);
 
         String method = getMethod("net.minecraft.world.WorldEntitySpawner.getRandomChunkPosition");
-        for (MethodNode mNode : cNode.methods)
+        for (MethodNode mNode : cNode.methods) {
             if (mNode.name.equals(method)
                     && mNode.desc.equals("(Lnet/minecraft/world/World;II)Lnet/minecraft/util/math/BlockPos;")) {
                 LogManager.getLogger("SBU").info("+++");
                 mNode.instructions = getLocaleInsnList();
                 break;
             }
+        }
 
         ClassWriter cWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         cNode.accept(cWriter);
@@ -66,15 +67,16 @@ public final class SBUTransformer implements IClassTransformer, IFMLLoadingPlugi
     public static BlockPos getRandomChunkPosition(World worldIn, int x, int z) {
         if (worldIn.provider.getDimension() != 0)
             return getRandomChunkPositionVanilla(worldIn, x, z);
+        Chunk chunk = worldIn.getChunkFromChunkCoords(x, z);
         int i = x * 16 + worldIn.rand.nextInt(16);
         int j = z * 16 + worldIn.rand.nextInt(16);
         ArrayList<Integer> list = new ArrayList<>();
-        for (int m = worldIn.getHeight() - 1; m > 0; m--)
+        for (int m = worldIn.getHeight(); m > 0; m--)
             if (worldIn.getBlockState(new BlockPos(i, m, j)).getBlock() == Blocks.AIR
-                    && worldIn.getBlockState(new BlockPos(i, m - 1, j)).getBlock() != Blocks.AIR)
+                && worldIn.getBlockState(new BlockPos(i, m - 1, j)).getBlock() != Blocks.AIR)
                 if (worldIn.rand.nextInt(99) + 1 <= SBUConfig.add_to_list_chance)
-					list.add(m);
-		if (worldIn.rand.nextInt(99) + 1 <= SBUConfig.clear_list_chance)
+                    list.add(m);
+        if (worldIn.rand.nextInt(99) + 1 <= SBUConfig.clear_list_chance)
             list.clear();
         return list.isEmpty() ? new BlockPos(i, 0, j) : new BlockPos(i, list.get(worldIn.rand.nextInt(list.size())), j);
     }

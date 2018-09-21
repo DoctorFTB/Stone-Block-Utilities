@@ -6,8 +6,8 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 
 public class CraftingInventory extends InventoryCrafting {
-    private final int        length;
-    private final Container  container;
+    private final int length;
+    private final Container container;
     private final IInventory inv;
 
     public CraftingInventory(Container containerIn, IInventory parent, int width, int height) {

@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class CrookRecipeCategory implements IRecipeCategory<CrookRecipe> {
-    public static final String            UID     = StoneBlockUtilities.MODID + ":crook";
+    public static final String UID = StoneBlockUtilities.MODID + ":crook";
     private static final ResourceLocation texture = new ResourceLocation("exnihilocreatio",
             "textures/gui/jei_hammer.png");
 

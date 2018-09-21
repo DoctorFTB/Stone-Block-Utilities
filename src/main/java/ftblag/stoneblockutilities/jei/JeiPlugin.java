@@ -35,7 +35,6 @@ public class JeiPlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(SBURegistry.hand), HandRecipeCategory.UID);
         registry.getJeiHelpers().getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(SBURegistry.hand));
         registry.addRecipeClickArea(GuiWB.class, 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
-        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerWB.class,
-                VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
+        registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerWB.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
     }
 }

@@ -24,20 +24,19 @@ public class SBUEvents {
     public static void block(BreakEvent e) {
         if (!(e.getPlayer() instanceof FakePlayer) && !e.getPlayer().capabilities.isCreativeMode
                 && e.getState().getBlock() == Blocks.STONE && !e.getWorld().isRemote
-                && e.getPlayer().getHeldItemMainhand() == ItemStack.EMPTY)
-            spawnEI(e, new ItemStack(ModItems.pebbles,
-                    rnd.nextInt(100) < SBUConfig.chance ? SBUConfig.drop_with : SBUConfig.drop_without, 0));
+                && e.getPlayer().getHeldItemMainhand().isEmpty())
+            e.getWorld()
+                    .spawnEntity(new EntityItem(e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(),
+                            new ItemStack(ModItems.pebbles,
+                                    rnd.nextInt(100) < SBUConfig.chance ? SBUConfig.drop_with : SBUConfig.drop_without,
+                                    0)));
         else if (e.getState().getBlock() == Blocks.DIRT && !e.getWorld().isRemote
                 && e.getPlayer().getHeldItemMainhand().getItem() == SBURegistry.crook) {
             e.getPlayer().getHeldItemMainhand().damageItem(1, e.getPlayer());
             e.getWorld().setBlockState(e.getPos(), Blocks.AIR.getDefaultState());
-            spawnEI(e, new ItemStack(Blocks.SAPLING, 1, rnd.nextInt(6)));
+            e.getWorld().spawnEntity(new EntityItem(e.getWorld(), e.getPos().getX(), e.getPos().getY(),
+                    e.getPos().getZ(), new ItemStack(Blocks.SAPLING, 1, rnd.nextInt(6))));
         }
-    }
-
-    private static void spawnEI(BreakEvent e, ItemStack is) {
-        e.getWorld()
-                .spawnEntity(new EntityItem(e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), is));
     }
 
     @SubscribeEvent

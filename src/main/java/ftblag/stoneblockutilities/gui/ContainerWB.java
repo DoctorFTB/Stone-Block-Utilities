@@ -14,12 +14,14 @@ import net.minecraft.item.crafting.IRecipe;
 public class ContainerWB extends Container {
 
     private StoneWorkbenchTileEntity te;
-    private CraftingInventory        crafter;
-    private InventoryCraftResult     craftResult;
-    private IRecipe                  currentRecipe;
+    private CraftingInventory crafter;
+    private InventoryCraftResult craftResult;
+    private EntityPlayer player;
+    private IRecipe currentRecipe;
 
     public ContainerWB(EntityPlayer player, StoneWorkbenchTileEntity te) {
         this.te = te;
+        this.player = player;
 
         craftResult = new InventoryCraftResult();
         crafter = new CraftingInventory(this, te, 3, 3);
@@ -47,7 +49,7 @@ public class ContainerWB extends Container {
             craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
             return;
         }
-        ItemStack stack = currentRecipe != null ? currentRecipe.getCraftingResult(crafter) : ItemStack.EMPTY;
+        ItemStack stack = currentRecipe != null ? currentRecipe.getRecipeOutput() : ItemStack.EMPTY;
         if (stack == ItemStack.EMPTY) {
             craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
             return;

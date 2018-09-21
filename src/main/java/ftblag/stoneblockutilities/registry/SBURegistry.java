@@ -1,7 +1,5 @@
 package ftblag.stoneblockutilities.registry;
 
-import static ftblag.stoneblockutilities.StoneBlockUtilities.MODID;
-
 import ftblag.stoneblockutilities.blocks.StoneWorkbenchBlock;
 import ftblag.stoneblockutilities.items.ItemHand;
 import ftblag.stoneblockutilities.items.ItemStoneCrook;
@@ -16,31 +14,31 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod.EventBusSubscriber(modid = MODID)
+import static ftblag.stoneblockutilities.StoneBlockUtilities.*;
+
 public class SBURegistry {
 
-    public static ItemStoneCrook      crook = new ItemStoneCrook();
+    public static ItemStoneCrook crook = new ItemStoneCrook();
     public static StoneWorkbenchBlock table = new StoneWorkbenchBlock();
-    public static ItemHand            hand  = new ItemHand();
+    public static ItemHand hand = new ItemHand();
 
     @SubscribeEvent
-    public static void item(Register<Item> e) {
+    public void item(Register<Item> e) {
         e.getRegistry().registerAll(crook, hand, new ItemBlock(table).setRegistryName(table.getRegistryName()));
     }
 
     @SubscribeEvent
-    public static void block(Register<Block> e) {
+    public void block(Register<Block> e) {
         e.getRegistry().registerAll(table);
     }
 
     @SubscribeEvent
-    public static void recipe(Register<IRecipe> e) {
+    public void recipe(Register<IRecipe> e) {
         GameRegistry.addShapedRecipe(new ResourceLocation(MODID + ":crook"), new ResourceLocation(MODID + "crook"),
                 new ItemStack(SBURegistry.crook), "## ", "#  ", "#  ", '#', Blocks.COBBLESTONE);
 
@@ -50,7 +48,7 @@ public class SBURegistry {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public static void models(ModelRegistryEvent e) {
+    public void models(ModelRegistryEvent e) {
         ModelLoader.setCustomModelResourceLocation(crook, 0,
                 new ModelResourceLocation(crook.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(hand, 0,
