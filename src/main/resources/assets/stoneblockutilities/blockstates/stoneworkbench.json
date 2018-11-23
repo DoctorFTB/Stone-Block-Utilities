@@ -1,5 +1,8 @@
 {
-  "variants": {
-    "normal": { "model": "stoneblockutilities:stoneworkbench" }
-  }
+    "variants": {
+        "facing=north": { "model": "stoneblockutilities:stoneworkbench" },
+        "facing=south": { "model": "stoneblockutilities:stoneworkbench", "y": 180 },
+        "facing=west":  { "model": "stoneblockutilities:stoneworkbench", "y": 270 },
+        "facing=east":  { "model": "stoneblockutilities:stoneworkbench", "y": 90 }
+    }
 }

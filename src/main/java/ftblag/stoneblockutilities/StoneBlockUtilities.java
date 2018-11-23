@@ -1,6 +1,6 @@
 package ftblag.stoneblockutilities;
 
-import ftblag.stoneblockutilities.config.SBUConfig;
+import ftblag.stoneblockutilities.gson.SBUGsonParser;
 import ftblag.stoneblockutilities.gui.ContainerWB;
 import ftblag.stoneblockutilities.gui.GuiHandler;
 import ftblag.stoneblockutilities.registry.SBURegistry;
@@ -8,18 +8,19 @@ import ftblag.stoneblockutilities.render.RenderWB;
 import ftblag.stoneblockutilities.tileentity.StoneWorkbenchTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.io.File;
 
 @Mod(modid = StoneBlockUtilities.MODID, name = StoneBlockUtilities.MODNAME, version = StoneBlockUtilities.VERSION, dependencies = StoneBlockUtilities.DEPENDENCIES)
 public class StoneBlockUtilities {
@@ -32,10 +33,9 @@ public class StoneBlockUtilities {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
-        MinecraftForge.EVENT_BUS.register(new SBURegistry());
+        SBUGsonParser.parseFile(new File(e.getModConfigurationDirectory(), MODID + ".json"));
         NetworkRegistry.INSTANCE.registerGuiHandler(StoneBlockUtilities.INSTANCE, new GuiHandler());
-        SBUConfig.setupConfig(new Configuration(e.getSuggestedConfigurationFile()), e.getModLog());
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT && SBUConfig.active_render)
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT && SBUGsonParser.cfg.active_render)
             client();
     }
 
@@ -51,5 +51,10 @@ public class StoneBlockUtilities {
     @SideOnly(Side.CLIENT)
     private void client() {
         ClientRegistry.bindTileEntitySpecialRenderer(StoneWorkbenchTileEntity.class, new RenderWB());
+    }
+
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent e) {
+        SBUGsonParser.parse();
     }
 }

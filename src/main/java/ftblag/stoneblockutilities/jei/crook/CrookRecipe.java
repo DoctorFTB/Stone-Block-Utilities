@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -26,8 +27,8 @@ public class CrookRecipe implements IRecipeWrapper {
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, inputs);
-        ingredients.setOutputs(ItemStack.class, outputs);
+        ingredients.setInputs(VanillaTypes.ITEM, inputs);
+        ingredients.setOutputs(VanillaTypes.ITEM, outputs);
     }
 
     public List<ItemStack> getInputs() {

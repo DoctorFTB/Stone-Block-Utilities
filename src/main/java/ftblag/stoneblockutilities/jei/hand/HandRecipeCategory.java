@@ -1,11 +1,7 @@
 package ftblag.stoneblockutilities.jei.hand;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import ftblag.stoneblockutilities.StoneBlockUtilities;
-import ftblag.stoneblockutilities.config.SBUConfig;
+import ftblag.stoneblockutilities.gson.SBUGsonParser;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -16,6 +12,9 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
     public static final String UID = StoneBlockUtilities.MODID + ":hand";
@@ -54,7 +53,9 @@ public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, HandRecipe recipeWrapper, IIngredients ingredients) {
         recipeLayout.getItemStacks().init(0, true, 74, 9);
-        recipeLayout.getItemStacks().set(0, recipeWrapper.getInputs().get(0));
+        ItemStack original = recipeWrapper.getInputs().get(0);
+        recipeLayout.getItemStacks().set(0, original);
+        SBUGsonParser.CustomDrop drop = SBUGsonParser.getFromOriginal(original);
 
         int slotIndex = 1;
 
@@ -74,8 +75,10 @@ public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
             public void onTooltip(int slotIndex, boolean input, ItemStack ingredient, List<String> tooltip) {
                 if (!input) {
                     tooltip.add(I18n.format("jei.sieve.dropChance"));
-                    tooltip.add(" * " + SBUConfig.drop_without + "x 100%");
-                    tooltip.add(" * " + SBUConfig.drop_with + "x " + 100 / SBUConfig.chance + "%");
+                    if (slotIndex == 2)
+                        tooltip.add(" * " + drop.dropWithout.getCount() + "x 100%");
+                    else
+                        tooltip.add(" * " + drop.dropWith.getCount() + "x " + 100 / drop.chance + "%");
                 }
             }
         });

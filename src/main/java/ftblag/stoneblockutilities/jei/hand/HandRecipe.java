@@ -6,11 +6,10 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.Lists;
 
-import exnihilocreatio.ModItems;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 public class HandRecipe implements IRecipeWrapper {
@@ -18,15 +17,15 @@ public class HandRecipe implements IRecipeWrapper {
     private List<ItemStack> inputs;
     private List<ItemStack> outputs;
 
-    public HandRecipe() {
-        inputs = Lists.newArrayList(new ItemStack(Blocks.STONE));
-        outputs = Lists.newArrayList(new ItemStack(ModItems.pebbles, 1, 0));
+    public HandRecipe(ItemStack input, ItemStack outputWith, ItemStack outputWithOut) {
+        inputs = Lists.newArrayList(input);
+        outputs = Lists.newArrayList(outputWith, outputWithOut);
     }
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, inputs);
-        ingredients.setOutputs(ItemStack.class, outputs);
+        ingredients.setInputs(VanillaTypes.ITEM, inputs);
+        ingredients.setOutputs(VanillaTypes.ITEM, outputs);
     }
 
     public List<ItemStack> getInputs() {

@@ -1,7 +1,7 @@
 package ftblag.stoneblockutilities.jei;
 
 import com.google.common.collect.Lists;
-
+import ftblag.stoneblockutilities.gson.SBUGsonParser;
 import ftblag.stoneblockutilities.gui.ContainerWB;
 import ftblag.stoneblockutilities.gui.GuiWB;
 import ftblag.stoneblockutilities.jei.crook.CrookRecipe;
@@ -15,6 +15,9 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @JEIPlugin
 public class JeiPlugin implements IModPlugin {
@@ -31,10 +34,20 @@ public class JeiPlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(SBURegistry.crook), CrookRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(SBURegistry.table), VanillaRecipeCategoryUid.CRAFTING);
 
-        registry.addRecipes(Lists.newArrayList(new HandRecipe()), HandRecipeCategory.UID);
+        registry.addRecipes(getHandRecipes(), HandRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(SBURegistry.hand), HandRecipeCategory.UID);
-        registry.getJeiHelpers().getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(SBURegistry.hand));
+//        registry.getJeiHelpers().getIngredientBlacklist().addIngredientToBlacklist(new ItemStack(SBURegistry.hand));
         registry.addRecipeClickArea(GuiWB.class, 88, 32, 28, 23, VanillaRecipeCategoryUid.CRAFTING);
         registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerWB.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
+    }
+
+    private static List<HandRecipe> getHandRecipes() {
+        List<HandRecipe> ret = new ArrayList<>();
+
+        for (SBUGsonParser.CustomDrop drop : SBUGsonParser.map.values()) {
+            ret.add(new HandRecipe(drop.original.copy(), drop.dropWith.copy(), drop.dropWithout.copy()));
+        }
+
+        return ret;
     }
 }

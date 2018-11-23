@@ -1,12 +1,10 @@
 {
-    "parent": "block/cube",
+    "parent": "block/orientable",
     "textures": {
         "particle": "stoneblockutilities:blocks/stone_crafting_table_front",
+        "top": "stoneblockutilities:blocks/stone_crafting_table_top",
         "down": "stoneblockutilities:blocks/stone_crafting_table_botton",
-        "up": "stoneblockutilities:blocks/stone_crafting_table_top",
-        "north": "stoneblockutilities:blocks/stone_crafting_table_front",
-        "east": "stoneblockutilities:blocks/stone_crafting_table_side",
-        "south": "stoneblockutilities:blocks/stone_crafting_table_side",
-        "west": "stoneblockutilities:blocks/stone_crafting_table_front"
+        "front": "stoneblockutilities:blocks/stone_crafting_table_front",
+        "side": "stoneblockutilities:blocks/stone_crafting_table_side"
     }
 }
