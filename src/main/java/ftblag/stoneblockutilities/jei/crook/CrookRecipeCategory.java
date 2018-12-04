@@ -3,6 +3,7 @@ package ftblag.stoneblockutilities.jei.crook;
 import javax.annotation.Nonnull;
 
 import ftblag.stoneblockutilities.StoneBlockUtilities;
+import ftblag.stoneblockutilities.gson.SBUGsonUtils;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -14,8 +15,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class CrookRecipeCategory implements IRecipeCategory<CrookRecipe> {
     public static final String UID = StoneBlockUtilities.MODID + ":crook";
-    private static final ResourceLocation texture = new ResourceLocation("exnihilocreatio",
-            "textures/gui/jei_hammer.png");
+    private static final ResourceLocation texture = new ResourceLocation(StoneBlockUtilities.MODID,
+            "textures/gui/jei_page.png");
 
     private final IDrawableStatic background;
 
@@ -49,7 +50,9 @@ public class CrookRecipeCategory implements IRecipeCategory<CrookRecipe> {
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, CrookRecipe recipeWrapper, IIngredients ingredients) {
         recipeLayout.getItemStacks().init(0, true, 74, 9);
-        recipeLayout.getItemStacks().set(0, recipeWrapper.getInputs().get(0));
+        ItemStack original = recipeWrapper.getInputs().get(0);
+        recipeLayout.getItemStacks().set(0, original);
+//        SBUGsonUtils.CrookDrop drop = SBUGsonUtils.getCrookDropFromOriginal(original);
 
         int slotIndex = 1;
 

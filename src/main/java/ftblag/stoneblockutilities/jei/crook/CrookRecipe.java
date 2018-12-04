@@ -18,11 +18,9 @@ public class CrookRecipe implements IRecipeWrapper {
     private List<ItemStack> inputs;
     private List<ItemStack> outputs;
 
-    public CrookRecipe() {
-        inputs = Lists.newArrayList(new ItemStack(Blocks.DIRT));
-        outputs = Lists.newArrayList();
-        for (int i = 0; i < 6; i++)
-            outputs.add(new ItemStack(Blocks.SAPLING, 1, i));
+    public CrookRecipe(ItemStack input, List<ItemStack> outputs) {
+        inputs = Lists.newArrayList(input);
+        this. outputs = outputs;
     }
 
     @Override

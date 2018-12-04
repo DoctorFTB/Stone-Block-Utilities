@@ -1,6 +1,7 @@
 package ftblag.stoneblockutilities;
 
 import ftblag.stoneblockutilities.gson.SBUGsonParser;
+import ftblag.stoneblockutilities.gson.SBUGsonUtils;
 import ftblag.stoneblockutilities.gui.ContainerWB;
 import ftblag.stoneblockutilities.gui.GuiHandler;
 import ftblag.stoneblockutilities.registry.SBURegistry;
@@ -26,7 +27,7 @@ import java.io.File;
 public class StoneBlockUtilities {
 
     public static final String MODID = "stoneblockutilities", MODNAME = "StoneBlockUtilities", VERSION = "@VERSION@",
-            DEPENDENCIES = "required-after:forge@[14.23.4.2707,);required-after:exnihilocreatio@[0.1.5,);";
+            DEPENDENCIES = "required-after:forge@[14.23.4.2707,);after:exnihilocreatio@[0.1.5,);";
 
     @Mod.Instance(StoneBlockUtilities.MODID)
     public static StoneBlockUtilities INSTANCE;
@@ -55,6 +56,6 @@ public class StoneBlockUtilities {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e) {
-        SBUGsonParser.parse();
+        SBUGsonUtils.parse();
     }
 }

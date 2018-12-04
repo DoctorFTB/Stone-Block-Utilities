@@ -8,7 +8,9 @@ import ftblag.stoneblockutilities.creativetabs.CT;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraftforge.fml.common.Optional;
 
+@Optional.Interface(iface = "exnihilocreatio.items.tools.ICrook", modid = "exnihilocreatio")
 public class ItemStoneCrook extends ItemTool implements ICrook {
 
     public ItemStoneCrook() {
@@ -20,6 +22,7 @@ public class ItemStoneCrook extends ItemTool implements ICrook {
         setCreativeTab(CT.tab);
     }
 
+    @Optional.Method(modid = "exnihilocreatio")
     @Override
     public boolean isCrook(ItemStack stack) {
         return true;

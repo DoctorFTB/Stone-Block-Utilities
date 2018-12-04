@@ -44,7 +44,7 @@ public class StoneWorkbenchBlock extends Block implements ITileEntityProvider {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-            EnumFacing facing, float hitX, float hitY, float hitZ) {
+                                    EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote)
             player.openGui(StoneBlockUtilities.INSTANCE, 0, world, pos.getX(), pos.getY(), pos.getZ());
         return true;
@@ -57,7 +57,7 @@ public class StoneWorkbenchBlock extends Block implements ITileEntityProvider {
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player,
-            boolean willHarvest) {
+                                   boolean willHarvest) {
         if (!world.isRemote)
             InventoryHelper.dropInventoryItems(world, pos, (IInventory) world.getTileEntity(pos));
         return super.removedByPlayer(state, world, pos, player, willHarvest);

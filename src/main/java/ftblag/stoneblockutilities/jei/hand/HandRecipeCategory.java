@@ -2,6 +2,7 @@ package ftblag.stoneblockutilities.jei.hand;
 
 import ftblag.stoneblockutilities.StoneBlockUtilities;
 import ftblag.stoneblockutilities.gson.SBUGsonParser;
+import ftblag.stoneblockutilities.gson.SBUGsonUtils;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -18,8 +19,8 @@ import java.util.List;
 
 public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
     public static final String UID = StoneBlockUtilities.MODID + ":hand";
-    private static final ResourceLocation texture = new ResourceLocation("exnihilocreatio",
-            "textures/gui/jei_hammer.png");
+    private static final ResourceLocation texture = new ResourceLocation(StoneBlockUtilities.MODID,
+            "textures/gui/jei_page.png");
 
     private final IDrawableStatic background;
 
@@ -55,7 +56,7 @@ public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
         recipeLayout.getItemStacks().init(0, true, 74, 9);
         ItemStack original = recipeWrapper.getInputs().get(0);
         recipeLayout.getItemStacks().set(0, original);
-        SBUGsonParser.CustomDrop drop = SBUGsonParser.getFromOriginal(original);
+        SBUGsonUtils.HandDrop drop = SBUGsonUtils.getHandDropFromOriginal(original);
 
         int slotIndex = 1;
 
@@ -74,7 +75,7 @@ public class HandRecipeCategory implements IRecipeCategory<HandRecipe> {
             @Override
             public void onTooltip(int slotIndex, boolean input, ItemStack ingredient, List<String> tooltip) {
                 if (!input) {
-                    tooltip.add(I18n.format("jei.sieve.dropChance"));
+                    tooltip.add("Drop Chance");
                     if (slotIndex == 2)
                         tooltip.add(" * " + drop.dropWithout.getCount() + "x 100%");
                     else
