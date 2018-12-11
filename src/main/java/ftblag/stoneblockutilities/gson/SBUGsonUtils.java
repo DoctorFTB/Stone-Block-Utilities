@@ -5,6 +5,7 @@ import ftblag.stoneblockutilities.registry.SBURegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent;
@@ -78,7 +79,7 @@ public class SBUGsonUtils {
         }
     }
 
-    public static void dropCrook(BlockEvent.BreakEvent e) {
+    public static void dropCrook(BlockEvent.BreakEvent e, EntityPlayer player) {
         if (crookDrops.containsKey(e.getState())) {
             CrookDrop drop = crookDrops.get(e.getState());
 
@@ -90,6 +91,7 @@ public class SBUGsonUtils {
                     spawnItem(e, stack.copy());
             }
             e.getWorld().setBlockToAir(e.getPos());
+            player.getHeldItemMainhand().damageItem(1, player);
         }
     }
 

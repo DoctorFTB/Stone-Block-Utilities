@@ -53,7 +53,7 @@ public class SBURegistry {
     @SubscribeEvent
     public static void recipe(Register<IRecipe> e) {
         GameRegistry.addShapedRecipe(new ResourceLocation(MODID + ":crook"), new ResourceLocation(MODID + "crook"),
-                new ItemStack(SBURegistry.crook), "## ", "#  ", "#  ", '#', Blocks.COBBLESTONE);
+                new ItemStack(SBURegistry.crook), "##", "# ", "# ", '#', Blocks.COBBLESTONE);
 
         GameRegistry.addShapedRecipe(new ResourceLocation(MODID + ":table"), new ResourceLocation(MODID + "table"),
                 new ItemStack(SBURegistry.table), "##", "##", '#', Blocks.COBBLESTONE);

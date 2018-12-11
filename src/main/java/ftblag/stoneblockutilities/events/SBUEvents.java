@@ -3,6 +3,7 @@ package ftblag.stoneblockutilities.events;
 import ftblag.stoneblockutilities.StoneBlockUtilities;
 import ftblag.stoneblockutilities.gson.SBUGsonUtils;
 import ftblag.stoneblockutilities.registry.SBURegistry;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
@@ -19,10 +20,11 @@ public class SBUEvents {
     @SubscribeEvent
     public static void block(BreakEvent e) {
         if (!e.getWorld().isRemote && !e.getPlayer().capabilities.isCreativeMode) {
-            if (!(e.getPlayer() instanceof FakePlayer) && e.getPlayer().getHeldItemMainhand().isEmpty())
+            ItemStack held = e.getPlayer().getHeldItemMainhand();
+            if (!(e.getPlayer() instanceof FakePlayer) && held.isEmpty())
                 SBUGsonUtils.dropHand(e);
-            else if (e.getPlayer().getHeldItemMainhand().getItem() == SBURegistry.crook)
-                SBUGsonUtils.dropCrook(e);
+            else if (held.getItem() == SBURegistry.crook)
+                SBUGsonUtils.dropCrook(e, e.getPlayer());
         }
 //        if (!(e.getPlayer() instanceof FakePlayer) && !e.getPlayer().capabilities.isCreativeMode
 //                && !e.getWorld().isRemote && e.getPlayer().getHeldItemMainhand().isEmpty())
