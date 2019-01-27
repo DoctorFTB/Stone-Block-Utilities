@@ -5,6 +5,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 public class GuiWB extends GuiContainer {
@@ -16,8 +17,8 @@ public class GuiWB extends GuiContainer {
         renderHoveredToolTip(mouseX, mouseY);
     }
 
-    public GuiWB(EntityPlayer player, StoneWorkbenchTileEntity teIn) {
-        super(new ContainerWB(player, teIn));
+    public GuiWB(EntityPlayer player, World world, StoneWorkbenchTileEntity teIn) {
+        super(new ContainerWB(player, world, teIn));
         xSize = 176;
         ySize = 166;
     }

@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "2.0.9"
+version = "2.1.4"
 group = "ftblag.stoneblockutilities"
 archivesBaseName = "StoneBlockUtilities"
 
@@ -36,12 +36,16 @@ repositories {
     maven {
         url = "modmaven.k-4u.nl"
     }
+    maven {
+        url "http://maven.shadowfacts.net/"
+    }
 }
 
 dependencies {
-    deobfCompile "ex-nihilo-creatio:exnihilocreatio:1.12:0.1.5"
-    deobfProvided "mezz.jei:jei_1.12.2:4.8.3.124:api"
-    runtime "mezz.jei:jei_1.12.2:4.8.3.124"
+    deobfCompile "ex-nihilo-creatio:exnihilocreatio:1.12:0.3.2"
+    deobfProvided "mezz.jei:jei_1.12.2:4.13.1.222:api"
+    runtime "mezz.jei:jei_1.12.2:4.13.1.222"
+    compile group: "net.shadowfacts", name: "Forgelin", version: "1.7.3"
 }
 
 processResources {
@@ -53,12 +57,5 @@ processResources {
     }
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
-    }
-}
-
-jar {
-    manifest {
-        attributes 'FMLCorePlugin': 'ftblag.stoneblockutilities.asm.SBUTransformer'
-        attributes 'FMLCorePluginContainsFMLMod': 'true'
     }
 }

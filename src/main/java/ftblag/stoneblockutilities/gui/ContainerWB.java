@@ -10,6 +10,7 @@ import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.World;
 
 public class ContainerWB extends Container {
 
@@ -17,10 +18,12 @@ public class ContainerWB extends Container {
     private CraftingInventory crafter;
     private InventoryCraftResult craftResult;
     private EntityPlayer player;
-    private IRecipe currentRecipe;
+    private World world;
+//    private IRecipe currentRecipe;
 
-    public ContainerWB(EntityPlayer player, StoneWorkbenchTileEntity te) {
+    public ContainerWB(EntityPlayer player, World world, StoneWorkbenchTileEntity te) {
         this.te = te;
+        this.world = world;
         this.player = player;
 
         craftResult = new InventoryCraftResult();
@@ -43,18 +46,19 @@ public class ContainerWB extends Container {
 
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
-        if (currentRecipe == null || !currentRecipe.matches(crafter, te.getWorld()))
-            currentRecipe = CraftingManager.findMatchingRecipe(crafter, te.getWorld());
-        if (currentRecipe == null) {
-            craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
-            return;
-        }
-        ItemStack stack = currentRecipe != null ? currentRecipe.getRecipeOutput() : ItemStack.EMPTY;
-        if (stack == ItemStack.EMPTY) {
-            craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
-            return;
-        }
-        craftResult.setInventorySlotContents(0, stack.copy());
+        this.slotChangedCraftingGrid(world, player, crafter, craftResult);
+//        if (currentRecipe == null || !currentRecipe.matches(crafter, te.getWorld()))
+//            currentRecipe = CraftingManager.findMatchingRecipe(crafter, te.getWorld());
+//        if (currentRecipe == null) {
+//            craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
+//            return;
+//        }
+//        ItemStack stack = currentRecipe != null ? currentRecipe.getRecipeOutput() : ItemStack.EMPTY;
+//        if (stack == ItemStack.EMPTY) {
+//            craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
+//            return;
+//        }
+//        craftResult.setInventorySlotContents(0, stack.copy());
     }
 
     @Override
