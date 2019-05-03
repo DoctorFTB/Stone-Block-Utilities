@@ -1,5 +1,6 @@
 package ftblag.stoneblockutilities.tileentity;
 
+import ftblag.stoneblockutilities.gui.CraftingInventory;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,12 +14,33 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class StoneWorkbenchTileEntity extends TileEntity implements IInventory {
 
     private NonNullList<ItemStack> inv;
+    private Set<CraftingInventory> invs = new HashSet<>();
 
     public StoneWorkbenchTileEntity() {
         inv = NonNullList.<ItemStack>withSize(10, ItemStack.EMPTY);
+    }
+
+    public void onOpen(CraftingInventory inv) {
+        this.invs.add(inv);
+    }
+
+    public void onClose(CraftingInventory inv) {
+        this.invs.remove(inv);
+    }
+
+    /**
+     * Notifies *all* open inventories of the changes, fixes dupe bug as in #532
+     */
+    public void updateInvs() {
+        for(CraftingInventory inv : this.invs) {
+            inv.changed();
+        }
     }
 
     @Override
@@ -84,6 +106,7 @@ public class StoneWorkbenchTileEntity extends TileEntity implements IInventory {
         super.readFromNBT(compound);
         inv = NonNullList.<ItemStack>withSize(getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, inv);
+        updateInvs();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ftblag.stoneblockutilities.gui;
 
 import ftblag.stoneblockutilities.tileentity.StoneWorkbenchTileEntity;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -26,8 +27,16 @@ public class ContainerWB extends Container {
         this.world = world;
         this.player = player;
 
-        craftResult = new InventoryCraftResult();
+        craftResult = new InventoryCraftResult() {
+            @Override
+            public void markDirty() {
+                te.markDirty();
+                IBlockState state = te.getWorld().getBlockState(te.getPos());
+                te.getWorld().notifyBlockUpdate(te.getPos(), state, state, 3);
+            }
+        };
         crafter = new CraftingInventory(this, te, 3, 3);
+        crafter.openInventory(player);
 
         addSlotToContainer(new SlotCrafting(player, crafter, craftResult, 0, 124, 35));
 
@@ -42,6 +51,7 @@ public class ContainerWB extends Container {
         for (int l = 0; l < 9; ++l)
             addSlotToContainer(new Slot(player.inventory, l, 8 + l * 18, 142));
         onCraftMatrixChanged(crafter);
+        te.updateInvs();
     }
 
     @Override
@@ -64,6 +74,13 @@ public class ContainerWB extends Container {
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
         return te.isUsableByPlayer(playerIn);
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer playerIn) {
+        super.onContainerClosed(playerIn);
+
+        crafter.closeInventory(playerIn);
     }
 
     @Override
