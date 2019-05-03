@@ -34,9 +34,6 @@ public class StoneWorkbenchTileEntity extends TileEntity implements IInventory {
         this.invs.remove(inv);
     }
 
-    /**
-     * Notifies *all* open inventories of the changes, fixes dupe bug as in #532
-     */
     public void updateInvs() {
         for(CraftingInventory inv : this.invs) {
             inv.changed();
