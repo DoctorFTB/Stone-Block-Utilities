@@ -1,5 +1,7 @@
 package ftblag.stoneblockutilities;
 
+import ftblag.stoneblockutilities.events.FakePlayerPotionFix;
+import ftblag.stoneblockutilities.events.VoidIslandFix;
 import ftblag.stoneblockutilities.gson.SBUGsonParser;
 import ftblag.stoneblockutilities.gson.SBUGsonUtils;
 import ftblag.stoneblockutilities.gui.ContainerWB;
@@ -9,13 +11,16 @@ import ftblag.stoneblockutilities.render.RenderWB;
 import ftblag.stoneblockutilities.tileentity.StoneWorkbenchTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,8 +31,9 @@ import java.io.File;
 @Mod(modid = StoneBlockUtilities.MODID, name = StoneBlockUtilities.MODNAME, version = StoneBlockUtilities.VERSION, dependencies = StoneBlockUtilities.DEPENDENCIES)
 public class StoneBlockUtilities {
 
-    public static final String MODID = "stoneblockutilities", MODNAME = "StoneBlockUtilities", VERSION = "@VERSION@",
-            DEPENDENCIES = "required-after:forge@[14.23.4.2707,);after:exnihilocreatio@[0.1.5,);";
+    // VERSION is the single source of truth; build.gradle reads it. Forge 2792 added PotionEvent (FakePlayerPotionFix).
+    public static final String MODID = "stoneblockutilities", MODNAME = "StoneBlockUtilities", VERSION = "2.2.0",
+            DEPENDENCIES = "required-after:forge@[14.23.5.2792,);after:exnihilocreatio@[0.1.5,);";
 
     @Mod.Instance(StoneBlockUtilities.MODID)
     public static StoneBlockUtilities INSTANCE;
@@ -38,6 +44,20 @@ public class StoneBlockUtilities {
         NetworkRegistry.INSTANCE.registerGuiHandler(StoneBlockUtilities.INSTANCE, new GuiHandler());
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT && SBUGsonParser.cfg.active_render)
             client();
+        if (Loader.isModLoaded("excompressum")) {
+            e.getModLog().info("Ex Compressum found, blocking potion effects on fake players without a connection");
+            MinecraftForge.EVENT_BUS.register(FakePlayerPotionFix.class);
+        }
+        if (Loader.isModLoaded("voidislandcontrol")) {
+            e.getModLog().info("Void Island Control found, backing up island data in player files");
+            MinecraftForge.EVENT_BUS.register(VoidIslandFix.class);
+        }
+    }
+
+    @Mod.EventHandler
+    public void serverStarted(FMLServerStartedEvent e) {
+        if (Loader.isModLoaded("voidislandcontrol"))
+            VoidIslandFix.restoreAll(FMLCommonHandler.instance().getMinecraftServerInstance());
     }
 
     @Mod.EventHandler

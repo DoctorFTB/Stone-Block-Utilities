@@ -1,61 +1,68 @@
+// ForgeGradle 5 setup for 1.12.2, based on https://github.com/quat1024/modern-forge-1.12-template
+// Gradle runs on Java 17; Gradle downloads a Java 8 toolchain for compiling and runClient/runServer.
 buildscript {
     repositories {
-        jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
+        maven { url = "https://maven.minecraftforge.net/" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+"
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "2.1.5"
+apply plugin: "java"
+apply plugin: "net.minecraftforge.gradle"
+
+// Bump VERSION in StoneBlockUtilities.java; the jar name and mcmod.info follow it.
+version = (file("src/main/java/ftblag/stoneblockutilities/StoneBlockUtilities.java").text =~ /VERSION = "([^"]+)"/)[0][1]
 group = "ftblag.stoneblockutilities"
 archivesBaseName = "StoneBlockUtilities"
 
-sourceCompatibility = targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
+    sourceCompatibility = "8"
+    targetCompatibility = "8"
 }
 
 minecraft {
-    version = "1.12.2-14.23.4.2707"
-    replaceIn "StoneBlockUtilities.java"
-    replace "@VERSION@", project.version
-    runDir = "run"
-    mappings = "snapshot_20171125"
+    // Same MCP names the mod was written against (snapshot_20171125 under ForgeGradle 2).
+    mappings channel: "snapshot", version: "20171125-1.12"
+    accessTransformer = file("dev_at.cfg")
+
+    runs {
+        "client" {
+            workingDirectory file("./run")
+            mods { "${project.name}" { source sourceSets.main } }
+        }
+        "server" {
+            workingDirectory file("./run/server")
+            mods { "${project.name}" { source sourceSets.main } }
+        }
+    }
 }
 
 repositories {
-    maven {
-        url "https://minecraft.curseforge.com/api/maven/"
-    }
-    maven {
-        url = "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-        url = "modmaven.k-4u.nl"
-    }
-    maven {
-        url "http://maven.shadowfacts.net/"
-    }
+    maven { url = "https://maven.minecraftforge.net/" }
+    maven { url = "https://maven.blamejared.com/" }
+    maven { url = "https://cursemaven.com" }
 }
 
 dependencies {
-    deobfCompile "ex-nihilo-creatio:exnihilocreatio:1.12:0.3.2"
-    deobfProvided "mezz.jei:jei_1.12.2:4.13.1.222:api"
-    runtime "mezz.jei:jei_1.12.2:4.13.1.222"
-    compile group: "net.shadowfacts", name: "Forgelin", version: "1.7.3"
+    minecraft "net.minecraftforge:forge:1.12.2-14.23.5.2860"
+    compileOnly fg.deobf("mezz.jei:jei_1.12.2:4.16.1.302:api")
+    runtimeOnly fg.deobf("mezz.jei:jei_1.12.2:4.16.1.302")
+    implementation fg.deobf("curse.maven:ex-nihilo-creatio-274456:2817545")
+    runtimeOnly fg.deobf("curse.maven:forgelin-248453:2785465") // Ex Nihilo Creatio needs Forgelin to load
+    // Optional: only used by VoidIslandFix, which is registered only when Void Island Control is loaded.
+    compileOnly fg.deobf("curse.maven:void-island-control-257655:2666967")
 }
 
 processResources {
     inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+    filesMatching("mcmod.info") {
+        expand "version": project.version, "mcversion": "1.12.2"
     }
 }
+
+// Forge 1.12 expects resources next to the classes when loading a mod from a directory.
+sourceSets.all { it.output.resourcesDir = it.output.classesDirs.getFiles().iterator().next() }

@@ -85,7 +85,7 @@ public class SBUGsonUtils {
 
             if (drop.randomDrop) {
                 for (int i = 0; i < drop.randomDropAmount; i++)
-                    spawnItem(e, drop.drops.get(SBUEvents.rnd.nextInt(drop.drops.size())));
+                    spawnItem(e, drop.drops.get(SBUEvents.rnd.nextInt(drop.drops.size())).copy());
             } else {
                 for (ItemStack stack : drop.drops)
                     spawnItem(e, stack.copy());
